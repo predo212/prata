@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mockup de Celular — Demo</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --phone-bg: linear-gradient(180deg,#0b1220 0%, #0c1530 100%);
+    --screen:#081026;
+    --frame:#0b0f14;
+    --accent:#3b82f6;
+    --glass: rgba(255,255,255,0.04);
+    --shadow: 0 30px 60px rgba(2,6,23,0.7);
+    --radius: 36px;
+    --phone-width: 360px; /* largura em estilo de celular */
+    --phone-height: 780px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,0.06), transparent 6%),
+                radial-gradient(900px 400px at 90% 90%, rgba(124,58,237,0.03), transparent 6%),
+                var(--bg);
+    display:grid;
+    place-items:center;
+    color:#e6eef8;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Container do telefone */
+  .phone-wrap{
+    width: calc(var(--phone-width) + 48px);
+    max-width:95vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:1rem;
+    transform: translateY(-6px);
+  }
+
+  .phone {
+    width: var(--phone-width);
+    height: var(--phone-height);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg,#0a0f16 0%, #07101c 100%);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.02);
+    padding: 18px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  /* Moldura fina (pega efeito vidro) */
+  .frame {
+    width:100%;
+    height:100%;
+    border-radius: calc(var(--radius) - 8px);
+    padding: 10px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent 20%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  /* Tela do aparelho */
+  .screen {
+    width:100%;
+    height:100%;
+    border-radius: calc(var(--radius) - 20px);
+    background: var(--screen);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.6), 0 10px 30px rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+
+  /* Status bar */
+  .status-bar {
+    height: 34px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 6px 12px;
+    color: rgba(230,238,248,0.9);
+    font-size: 13px;
+    backdrop-filter: blur(6px);
+    z-index:5;
+    position:relative;
+  }
+
+  .status-left, .status-right {
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .dot {
+    width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(59,130,246,0.6);
+  }
+
+  /* Notch / camera simulação */
+  .notch {
+    position:absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 28px;
+    padding: 4px 12px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.36), rgba(255,255,255,0.02));
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:rgba(255,255,255,0.5);
+    font-size:12px;
+    z-index:6;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.45);
+  }
+
+  /* Conteúdo real da tela */
+  .content {
+    padding: 56px 18px 20px;
+    flex:1;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  /* Grid de icons estilo launcher */
+  .icon-grid {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    align-items:start;
+  }
+
+  .app {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+    font-size:12px;
+    color: rgba(230,238,248,0.92);
+  }
+
+  .icon {
+    width:62px;
+    height:62px;
+    border-radius:14px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+    transition: transform .14s cubic-bezier(.2,.9,.25,1), box-shadow .14s;
+  }
+
+  .icon:active { transform: scale(.96); box-shadow: 0 3px 6px rgba(2,6,23,0.6); }
+
+  /* ícones sample com gradientes */
+  .i-maps { background: linear-gradient(135deg,#06b6d4,#3b82f6); }
+  .i-music { background: linear-gradient(135deg,#f97316,#f43f5e); }
+  .i-mail  { background: linear-gradient(135deg,#0ea5a4,#38bdf8); }
+  .i-photos{ background: linear-gradient(135deg,#f472b6,#06b6d4); }
+  .i-settings{ background: linear-gradient(135deg,#a78bfa,#60a5fa); }
+  .i-weather{ background: linear-gradient(135deg,#f59e0b,#ef4444); }
+  .i-notes{ background: linear-gradient(135deg,#34d399,#10b981); }
+  .i-clock { background: linear-gradient(135deg,#818cf8,#06b6d4); }
+
+  .app-label { opacity:0.92; font-weight:500; }
+
+  /* Dock */
+  .dock {
+    margin-top: 18px;
+    background: rgba(255,255,255,0.02);
+    padding: 10px 12px;
+    border-radius: 14px;
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    align-items:center;
+    box-shadow: 0 8px 20px rgba(2,6,23,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+
+  .dock .icon { width:56px;height:56px;border-radius:12px; }
+
+  /* Bottom home indicator */
+  .home-indicator {
+    height: 36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-bottom: 8px;
+    pointer-events:none;
+  }
+
+  .pill {
+    width:88px;
+    height:6px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 4px 12px rgba(2,6,23,0.4), inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+
+  /* Pequenas animações */
+  .app:active .icon { transform: scale(.92); }
+  .launching {
+    animation: pop .32s cubic-bezier(.2,.9,.25,1);
+  }
+  @keyframes pop {
+    0% { transform: scale(.9); opacity:0; }
+    100% { transform: scale(1); opacity:1; }
+  }
+
+  /* Responsividade: diminuir proporção se precisa caber */
+  @media (max-width:420px){
+    :root{ --phone-width: 320px; --phone-height: 700px; }
+  }
+
+  /* Pequeno controle visual externo */
+  .label {
+    color: rgba(255,255,255,0.85);
+    font-size:13px;
+    text-align:center;
+    margin-bottom:10px;
+    opacity:0.9;
+  }
+
+  /* Simular efeito de relógio/data grande no topo */
+  .big-clock {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+  }
+  .time {
+    font-size:44px;
+    font-weight:600;
+    letter-spacing:-1px;
+    color:#f8fafc;
+  }
+  .date {
+    font-size:13px;
+    color:rgba(230,238,248,0.75);
+  }
+</style>
+</head>
+<body>
+  <div class="phone-wrap" aria-hidden="false">
+    <div style="text-align:center; width:100%;">
+      <div class="label">Mockup de Celular — abra no navegador</div>
+    </div>
+
+    <div class="phone" role="region" aria-label="Aparelho mockup">
+      <div class="frame">
+        <div class="screen" id="screen">
+          <div class="status-bar" aria-hidden="true">
+            <div class="status-left">
+              <div class="dot" title="Status"></div>
+              <div style="font-weight:600;">Operadora</div>
+            </div>
+            <div class="status-right">
+              <div style="display:flex;gap:8px;align-items:center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.9" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div style="font-weight:600;">100%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="notch" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.95" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="3" fill="rgba(255,255,255,0.12)"/></svg>
+            <div style="font-weight:600; font-size:13px;">Hoje</div>
+            <div style="opacity:.6; font-size:12px;">· 72°F</div>
+          </div>
+
+          <div class="content" id="content">
+            <div class="big-clock" aria-hidden="true">
+              <div class="time" id="clock">12:47</div>
+              <div class="date">Qua, 8 Out</div>
+            </div>
+
+            <div class="icon-grid" role="list">
+              <div class="app" role="listitem">
+                <div class="icon i-maps" title="Maps">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25))" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v10l3-2 4 3V3l-7 2z" fill="rgba(255,255,255,0.92)"/></svg>
+                </div>
+                <div class="app-label">Maps</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-music">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 17V5l10-2v12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Música</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-mail">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l9 6 9-6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Mail</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-photos">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.95)"/></svg>
+                </div>
+                <div class="app-label">Fotos</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-settings">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Ajustes</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-weather">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18a6 6 0 1 1 0-12 8 8 0 1 1 0 12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Tempo</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-notes">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 7h10M7 11h10M7 15h7" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Notas</div>
+              </div>
+
+              <div class="app">
+                <div class="icon i-clock">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="rgba(255,255,255,0.95)" stroke-width="1.6"/><path d="M12 8v5l3 2" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="app-label">Relógio</div>
+              </div>
+            </div>
+
+            <div class="dock" style="margin-top:20px;">
+              <div class="icon i-maps" title="Maps (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v10l3-2 4 3V3l-7 2z" fill="rgba(255,255,255,0.92)"/></svg></div>
+              <div class="icon i-mail" title="Mail (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 8l9 6 9-6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="icon i-photos" title="Fotos (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.95)"/></svg></div>
+            </div>
+          </div>
+
+          <div class="home-indicator" aria-hidden="true">
+            <div class="pill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Relógio simples
+  function updateClock(){
+    const el = document.getElementById('clock');
+    if(!el) return;
+    const now = new Date();
+    let h = now.getHours();
+    let m = now.getMinutes();
+    h = String(h).padStart(2,'0');
+    m = String(m).padStart(2,'0');
+    el.textContent = `${h}:${m}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000*30);
+
+  // Simula "abrir" um app com animação pequena
+  document.querySelectorAll('.app').forEach(a=>{
+    a.addEventListener('click', ()=> {
+      const icon = a.querySelector('.icon');
+      if(!icon) return;
+      // breve efeito de lançamento
+      icon.classList.add('launching');
+      setTimeout(()=> icon.classList.remove('launching'), 350);
+
+      // simples feedback: replace content area com "app aberto" temporariamente
+      const content = document.getElementById('content');
+      const prev = content.innerHTML;
+      content.innerHTML = `
+        <div style="padding:24px; color: #e6eef8;">
+          <h2 style="margin:0 0 12px;">${a.querySelector('.app-label').textContent}</h2>
+          <p style="opacity:0.85; line-height:1.5;">Este é um mockup — aqui poderia abrir o app. Toque fora para voltar.</p>
+          <div style="margin-top:18px;"><button id="backBtn" style="background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer;">Voltar</button></div>
+        </div>
+      `;
+      // volta ao conteúdo anterior ao clicar em voltar
+      document.getElementById('backBtn').addEventListener('click', ()=>{
+        content.innerHTML = prev;
+        attachAppListeners(); // reanexa listeners
+      });
+    });
+  });
+
+  // ao recriar conteúdo precisamos reanexar
+  function attachAppListeners(){
+    document.querySelectorAll('.app').forEach(a=>{
+      a.addEventListener('click', ()=> {
+        const icon = a.querySelector('.icon');
+        if(!icon) return;
+        icon.classList.add('launching');
+        setTimeout(()=> icon.classList.remove('launching'), 350);
+        const content = document.getElementById('content');
+        const prev = content.innerHTML;
+        content.innerHTML = `
+          <div style="padding:24px; color: #e6eef8;">
+            <h2 style="margin:0 0 12px;">${a.querySelector('.app-label').textContent}</h2>
+            <p style="opacity:0.85; line-height:1.5;">Este é um mockup — aqui poderia abrir o app. Toque fora para voltar.</p>
+            <div style="margin-top:18px;"><button id="backBtn2" style="background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer;">Voltar</button></div>
+          </div>
+        `;
+        document.getElementById('backBtn2').addEventListener('click', ()=>{
+          content.innerHTML = prev;
+          attachAppListeners();
+        });
+      }, {once:true});
+    });
+  }
+
+  // A primeira vez já adicionou listeners; função serve para reanexar após "voltar".
+</script>
+</body>
+</html>
