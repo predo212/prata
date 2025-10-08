@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mockup A36</title>
+  <title>Mockup Celular Fixo</title>
   <style>
     :root {
       --bg: #0f1724;
@@ -13,33 +13,37 @@
       --accent: #3b82f6;
       --shadow: 0 30px 60px rgba(2,6,23,0.7);
       --radius: 32px;
-      /* Ajustando para A36: tela mais alongada */
       --phone-width: 360px;
       --phone-height: 800px;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
     html, body {
-      height:100%;
-      margin:0;
+      height: 100%;
+      margin: 0;
       background: radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,0.06), transparent 6%),
                   radial-gradient(900px 400px at 90% 90%, rgba(124,58,237,0.03), transparent 6%),
                   var(--bg);
-      display: grid;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* impede rolagem da página de fundo */
       color: #e6eef8;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
     .phone-wrap {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: calc(var(--phone-width) + 48px);
       max-width: 95vw;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      transform: translateY(-6px);
     }
 
     .phone {
@@ -98,7 +102,8 @@
     }
 
     .dot {
-      width: 8px; height: 8px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--accent);
       box-shadow: 0 0 8px rgba(59,130,246,0.6);
@@ -125,7 +130,7 @@
     .content {
       padding: 56px 18px 20px;
       flex: 1;
-      overflow: auto;
+      overflow: auto; /* permite rolagem dentro da tela do celular */
       -webkit-overflow-scrolling: touch;
     }
 
@@ -255,6 +260,10 @@
 </head>
 <body>
   <div class="phone-wrap">
+    <div style="text-align:center; width:100%;">
+      <div class="label">Mockup Celular Fixo</div>
+    </div>
+
     <div class="phone">
       <div class="frame">
         <div class="screen" id="screen">
@@ -265,80 +274,114 @@
             </div>
             <div class="status-right">
               <div style="display:flex; gap:8px; align-items:center;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.9" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.9" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12h.01M12 12h.01M19 12h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 <div style="font-weight:600;">100%</div>
               </div>
             </div>
           </div>
+
           <div class="notch">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.95" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="3" fill="rgba(255,255,255,0.12)"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.95" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="7" r="3" fill="rgba(255,255,255,0.12)"/>
+            </svg>
             <div style="font-weight:600; font-size:13px;">Hoje</div>
             <div style="opacity:.6; font-size:12px;">· 72°F</div>
           </div>
+
           <div class="content" id="content">
             <div class="big-clock">
               <div class="time" id="clock">12:47</div>
               <div class="date">Qua, 8 Out</div>
             </div>
+
             <div class="icon-grid">
               <div class="app">
                 <div class="icon i-maps">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25))" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v10l3-2 4 3V3l-7 2z" fill="rgba(255,255,255,0.92)"/></svg>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25))" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3v10l3-2 4 3V3l-7 2z" fill="rgba(255,255,255,0.92)"/>
+                  </svg>
                 </div>
                 <div class="app-label">Maps</div>
               </div>
+
               <div class="app">
                 <div class="icon i-music">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 17V5l10-2v12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 17V5l10-2v12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Música</div>
               </div>
+
               <div class="app">
                 <div class="icon i-mail">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l9 6 9-6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 8l9 6 9-6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Mail</div>
               </div>
+
               <div class="app">
                 <div class="icon i-photos">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.95)"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.95)"/>
+                  </svg>
                 </div>
                 <div class="app-label">Fotos</div>
               </div>
+
               <div class="app">
                 <div class="icon i-settings">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Ajustes</div>
               </div>
+
               <div class="app">
                 <div class="icon i-weather">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18a6 6 0 1 1 0-12 8 8 0 1 1 0 12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18a6 6 a 0 1 1 0-12 8 8 0 1 1 0 12" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Tempo</div>
               </div>
+
               <div class="app">
                 <div class="icon i-notes">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 7h10M7 11h10M7 15h7" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 7h10M7 11h10M7 15h7" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Notas</div>
               </div>
+
               <div class="app">
                 <div class="icon i-clock">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="rgba(255,255,255,0.95)" stroke-width="1.6"/><path d="M12 8v5l3 2" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="8" stroke="rgba(255,255,255,0.95)" stroke-width="1.6"/>
+                    <path d="M12 8v5l3 2" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
                 <div class="app-label">Relógio</div>
               </div>
             </div>
+
             <div class="dock" style="margin-top:20px;">
               <div class="icon i-maps" title="Maps (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v10l3-2 4 3V3l-7 2z" fill="rgba(255,255,255,0.92)"/></svg></div>
               <div class="icon i-mail" title="Mail (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 8l9 6 9-6" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <div class="icon i-photos" title="Fotos (dock)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.95)"/></svg></div>
             </div>
           </div>
+
           <div class="home-indicator">
             <div class="pill"></div>
           </div>
+
         </div>
       </div>
     </div>
@@ -356,14 +399,15 @@
       el.textContent = `${h}:${m}`;
     }
     updateClock();
-    setInterval(updateClock, 1000*30);
+    setInterval(updateClock, 1000 * 30);
 
-    document.querySelectorAll('.app').forEach(a=>{
-      a.addEventListener('click', ()=> {
+    document.querySelectorAll('.app').forEach(a => {
+      a.addEventListener('click', () => {
         const icon = a.querySelector('.icon');
-        if(!icon) return;
+        if (!icon) return;
         icon.classList.add('launching');
-        setTimeout(()=> icon.classList.remove('launching'), 350);
+        setTimeout(() => icon.classList.remove('launching'), 350);
+
         const content = document.getElementById('content');
         const prev = content.innerHTML;
         content.innerHTML = `
@@ -373,20 +417,21 @@
             <div style="margin-top:18px;"><button id="backBtn" style="background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer;">Voltar</button></div>
           </div>
         `;
-        document.getElementById('backBtn').addEventListener('click', ()=>{
+        document.getElementById('backBtn').addEventListener('click', () => {
           content.innerHTML = prev;
           attachAppListeners();
         });
       });
     });
 
-    function attachAppListeners(){
-      document.querySelectorAll('.app').forEach(a=>{
-        a.addEventListener('click', ()=> {
+    function attachAppListeners() {
+      document.querySelectorAll('.app').forEach(a => {
+        a.addEventListener('click', () => {
           const icon = a.querySelector('.icon');
-          if(!icon) return;
+          if (!icon) return;
           icon.classList.add('launching');
-          setTimeout(()=> icon.classList.remove('launching'), 350);
+          setTimeout(() => icon.classList.remove('launching'), 350);
+
           const content = document.getElementById('content');
           const prev = content.innerHTML;
           content.innerHTML = `
@@ -396,7 +441,7 @@
               <div style="margin-top:18px;"><button id="backBtn2" style="background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer;">Voltar</button></div>
             </div>
           `;
-          document.getElementById('backBtn2').addEventListener('click', ()=>{
+          document.getElementById('backBtn2').addEventListener('click', () => {
             content.innerHTML = prev;
             attachAppListeners();
           });
@@ -406,4 +451,3 @@
   </script>
 </body>
 </html>
-
