@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mockup Celular Fixo</title> <!-- Aqui é onde o texto fica visível só na aba -->
   <style>
     :root {
@@ -62,6 +62,13 @@
     .app {
       text-align: center;
       font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s ease;
+    }
+
+    .app:active {
+      transform: scale(0.95);
     }
 
     .icon {
@@ -92,6 +99,16 @@
       height: 50px;
       border-radius: 12px;
       font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s ease;
+    }
+
+    .dock .icon:active {
+      transform: scale(0.9);
     }
 
     .pill {
@@ -100,6 +117,117 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.1);
       margin: 8px auto;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-content {
+      background: var(--bg);
+      border-radius: var(--radius);
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      color: var(--text);
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text);
+      cursor: pointer;
+    }
+    /* Styles for some app content */
+    .calendar {
+      display: flex;
+      justify-content: center;
+    }
+    .calendar input[type="date"] {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background: #1a2249;
+      color: var(--text);
+      text-align: center;
+    }
+    .photos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .photos img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+    .notes textarea {
+      width: 100%;
+      height: 150px;
+      background: #1a2249;
+      color: var(--text);
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      resize: vertical;
+    }
+    .clock-app {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .settings {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .weather {
+      text-align: center;
+      font-size: 24px;
+    }
+    .music {
+      text-align: center;
+      font-size: 18px;
+    }
+    .music button {
+      margin: 10px 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -115,24 +243,32 @@
     <div class="clock" id="clock">12:00</div>
 
     <div class="grid">
-      <div class="app"><div class="icon">M</div>Mail</div>
-      <div class="app"><div class="icon">F</div>Fotos</div>
-      <div class="app"><div class="icon">N</div>Notas</div>
-      <div class="app"><div class="icon">R</div>Relógio</div>
-      <div class="app"><div class="icon">C</div>Câmera</div>
-      <div class="app"><div class="icon">S</div>Config</div>
-      <div class="app"><div class="icon">T</div>Tempo</div>
-      <div class="app"><div class="icon">M</div>Música</div>
+      <div class="app" data-app="mail"><div class="icon">M</div>Mail</div>
+      <div class="app" data-app="photos"><div class="icon">F</div>Fotos</div>
+      <div class="app" data-app="notes"><div class="icon">N</div>Notas</div>
+      <div class="app" data-app="clock"><div class="icon">R</div>Relógio</div>
+      <div class="app" data-app="camera"><div class="icon">C</div>Câmera</div>
+      <div class="app" data-app="settings"><div class="icon">S</div>Config</div>
+      <div class="app" data-app="weather"><div class="icon">T</div>Tempo</div>
+      <div class="app" data-app="music"><div class="icon">M</div>Música</div>
     </div>
   </div>
 
   <div class="dock">
-    <div class="icon">📞</div>
-    <div class="icon">💬</div>
-    <div class="icon">🌐</div>
+    <div class="icon" data-app="phone">📞</div>
+    <div class="icon" data-app="messages">💬</div>
+    <div class="icon" data-app="browser">🌐</div>
   </div>
 
   <div class="pill"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Fechar">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
 
   <script>
     function updateClock() {
@@ -145,6 +281,115 @@
 
     updateClock();
     setInterval(updateClock, 30000);
+
+    // Modal elements
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close');
+
+    function openModal(content) {
+      modalBody.innerHTML = content;
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      modalBody.innerHTML = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    // Apps content
+    const appsContent = {
+      mail: `
+        <h2>Mail</h2>
+        <p>Caixa de entrada vazia. Nenhum email novo.</p>
+      `,
+      photos: `
+        <h2>Fotos</h2>
+        <div class="photos">
+          <img src="https://picsum.photos/seed/pic1/80" alt="Foto 1" />
+          <img src="https://picsum.photos/seed/pic2/80" alt="Foto 2" />
+          <img src="https://picsum.photos/seed/pic3/80" alt="Foto 3" />
+          <img src="https://picsum.photos/seed/pic4/80" alt="Foto 4" />
+          <img src="https://picsum.photos/seed/pic5/80" alt="Foto 5" />
+        </div>
+      `,
+      notes: `
+        <h2>Notas</h2>
+        <textarea placeholder="Digite suas notas aqui..."></textarea>
+      `,
+      clock: `
+        <h2>Relógio</h2>
+        <div class="clock-app" id="app-clock">00:00</div>
+        <div class="calendar">
+          <input type="date" />
+        </div>
+      `,
+      camera: `
+        <h2>Câmera</h2>
+        <p>Infelizmente, não há câmera real neste mockup.</p>
+      `,
+      settings: `
+        <h2>Configurações</h2>
+        <div class="settings">
+          <p><strong>Wi-Fi:</strong> Conectado</p>
+          <p><strong>Bluetooth:</strong> Ativado</p>
+          <p><strong>Modo avião:</strong> Desativado</p>
+        </div>
+      `,
+      weather: `
+        <h2>Tempo</h2>
+        <div class="weather">
+          <p>Ensolarado ☀️</p>
+          <p>25ºC - São Paulo</p>
+        </div>
+      `,
+      music: `
+        <h2>Música</h2>
+        <div class="music">
+          <p>Tocando: Nada por enquanto</p>
+          <button onclick="alert('Play!')">Play</button>
+          <button onclick="alert('Pause!')">Pause</button>
+        </div>
+      `,
+      phone: `
+        <h2>Telefone</h2>
+        <p>Discando...</p>
+      `,
+      messages: `
+        <h2>Mensagens</h2>
+        <p>Você não tem mensagens novas.</p>
+      `,
+      browser: `
+        <h2>Navegador</h2>
+        <p>Navegue na web aqui (mockup).</p>
+      `
+    };
+
+    // Update clock in Relógio app every minute
+    function updateAppClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const appClock = document.getElementById('app-clock');
+      if(appClock) appClock.textContent = `${h}:${m}`;
+    }
+    setInterval(updateAppClock, 60000);
+
+    // Handle app clicks
+    document.querySelectorAll('.app, .dock .icon').forEach(el => {
+      el.addEventListener('click', () => {
+        const appName = el.dataset.app;
+        if(appsContent[appName]) {
+          openModal(appsContent[appName]);
+          updateAppClock(); // update Relógio app immediately if opened
+        }
+      });
+    });
   </script>
 </body>
 </html>
